@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:version='2' class='v2' expr:dir='data:blog.languageDirection' expr:lang='data:blog.locale' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+  <head>
+    <title><data:blog.pageTitle/></title>
+    <b:skin></b:skin>
+    <b:include data='blog' name='google-analytics'/>
+    <b:if cond='data:blog.pageType == &quot;index&quot;'>
+      <meta expr:content='data:blog.title' itemprop='name'/>
+      <b:if cond='data:blog.metaDescription'>
+        <meta expr:content='data:blog.metaDescription' itemprop='description'/>
+      </b:if>
+    </b:if>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic" />
+    <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css" />
+    <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css" />
+    <style>
+    .post-footer {
+      display: none;
+    }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <b:section id='header' name='Header'>
+          <b:widget id='Header1' locked='true' title='pandoricity (Header)' type='Header'>
+            <b:widget-settings>
+              <b:widget-setting name='displayUrl'/>
+              <b:widget-setting name='displayHeight'>0</b:widget-setting>
+              <b:widget-setting name='sectionWidth'>-1</b:widget-setting>
+              <b:widget-setting name='useImage'>false</b:widget-setting>
+              <b:widget-setting name='shrinkToFit'>false</b:widget-setting>
+              <b:widget-setting name='imagePlacement'>BEHIND</b:widget-setting>
+              <b:widget-setting name='displayWidth'>0</b:widget-setting>
+            </b:widget-settings>
+            <b:includable id="main">
+              <h1>
+                <b:tag cond='data:blog.url != data:blog.homepageUrl' expr:href='data:blog.homepageUrl' name='a'>
+                  <data:title/>
+                </b:tag>
+              </h1>
+              <data:description/>
+            </b:includable>
+          </b:widget>
+        </b:section>
+      </div>
+
+      <div class="row">
+        <b:section id='main' class='column' name='Main'>
+          <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog'>
+            <b:widget-settings>
+              <b:widget-setting name='showDateHeader'>true</b:widget-setting>
+              <b:widget-setting name='style.textcolor'>#444444</b:widget-setting>
+              <b:widget-setting name='showShareButtons'>true</b:widget-setting>
+              <b:widget-setting name='showCommentLink'>true</b:widget-setting>
+              <b:widget-setting name='style.urlcolor'>#444444</b:widget-setting>
+              <b:widget-setting name='showAuthor'>false</b:widget-setting>
+              <b:widget-setting name='disableGooglePlusShare'>true</b:widget-setting>
+              <b:widget-setting name='style.linkcolor'>#444444</b:widget-setting>
+              <b:widget-setting name='style.unittype'>TextAndImage</b:widget-setting>
+              <b:widget-setting name='style.bgcolor'>#ffffff</b:widget-setting>
+              <b:widget-setting name='showAuthorProfile'>false</b:widget-setting>
+              <b:widget-setting name='style.layout'>1x1</b:widget-setting>
+              <b:widget-setting name='showLabels'>true</b:widget-setting>
+              <b:widget-setting name='showLocation'>true</b:widget-setting>
+              <b:widget-setting name='showTimestamp'>true</b:widget-setting>
+              <b:widget-setting name='postsPerAd'>1</b:widget-setting>
+              <b:widget-setting name='showBacklinks'>false</b:widget-setting>
+              <b:widget-setting name='style.bordercolor'>#ffffff</b:widget-setting>
+              <b:widget-setting name='showInlineAds'>false</b:widget-setting>
+              <b:widget-setting name='showReactions'>false</b:widget-setting>
+            </b:widget-settings>
+
+            <b:includable id="main">
+              <b:loop values='data:posts' var='post'>
+                <div style='margin-top: 20px'>
+                  <b:include data='post' name='post'/>
+                </div>
+              </b:loop>
+
+              <!--
+              <b:if cond='data:newerPageUrl'>
+                <a expr:href='data:newerPageUrl' expr:title='data:newerPageTitle'><data:newerPageTitle/></a>
+              </b:if>
+
+              <a expr:href='data:blog.homepageUrl'><data:homeMsg/></a>
+
+              <b:if cond='data:olderPageUrl'>
+                <a expr:href='data:olderPageUrl' expr:title='data:olderPageTitle'><data:olderPageTitle/></a>
+              </b:if>
+              -->
+            </b:includable>
+          </b:widget>
+        </b:section>
+
+        <div id="all_post_root" class="column column-25">
+          <!-- StackOverflow craziness -->
+          Loading...
+
+          <script type="text/javascript">
+          function renderToC(response) {
+            const ul = document.createElement("ul");
+            for (const entry of response.feed.entry) {
+              for (const link of entry.link) {
+                if (link.rel === 'alternate' &amp;&amp; link.type === 'text/html') {
+                  const a = document.createElement("a");
+                  a.href = link.href;
+                  a.appendChild(document.createTextNode(link.title));
+
+                  const li = document.createElement("li");
+                  li.appendChild(a);
+                  li.appendChild(document.createElement("br"));
+                  li.appendChild(document.createTextNode(` (${entry.published['$t'].slice(0, 7)})`));
+                  ul.appendChild(li);
+                  break;
+                }
+              }
+            }
+
+            var allPostRoot = document.getElementById('all_post_root');
+            allPostRoot.innerHTML = "";
+            allPostRoot.appendChild(ul);
+          };
+          </script>
+
+          <script type="text/javascript" src="/feeds/posts/default?alt=json&amp;callback=renderToC">
+          </script>
+        </div>
+      </div>
+    </div>
+
+  </body>
+
+</html>
